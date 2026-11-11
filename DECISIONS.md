@@ -16,7 +16,7 @@ Organización GitHub: `iotinkers-com` (los 4 repos viven bajo esta organización
 | `openfield-connectors` | Adaptadores a dispositivos/sistemas externos + `simulators/`. |
 | `openfield-planning` | Este paquete documental. |
 
-## Decisiones (D1–D16)
+## Decisiones (D1–D17)
 Cada decisión tendrá un ADR en `03-adr/`. Regla de cambio: no reabrir; un cambio exige un
 ADR nuevo que reemplace al anterior.
 
@@ -38,3 +38,4 @@ ADR nuevo que reemplace al anterior.
 | D14 | **Licencias.** Apache 2.0 para software; CERN-OHL para hardware; módulos empresariales cerrados opcionales más adelante. | ADR-0014 |
 | D15 | **Privacidad.** Indicador visible de grabación, registro de consentimiento, política de retención, minimizar captura de personas y audio ambiental de terceros. Verificar ley chilena de protección de datos personales vigente. | ADR-0015 |
 | D16 | **Límite industrial.** Nunca presentar el sistema como apto para atmósferas explosivas ni como equipo de seguridad. ATEX/IECEx solo se menciona como requisito futuro del equipo completo, sin asumir certificación. | ADR-0016 |
+| D17 | **Desambiguación de activos.** Protocolo de captura por activo (identificador explícito al inicio) + reglas/agentes de atribución; la IA es apoyo, nunca la fuente primaria de identidad, con validación humana. Deriva de D3 y D6. | ADR-0017 |

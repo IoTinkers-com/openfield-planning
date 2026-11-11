@@ -1,6 +1,6 @@
 # 03 · Registro de decisiones de arquitectura (ADR)
 
-> Estado: 16/16 aceptadas · Tanda B · OpenField (IoTinkers)
+> Estado: 17/17 aceptadas · Tanda B · OpenField (IoTinkers)
 
 Cada ADR corresponde a una decisión de `DECISIONS.md`. Formato: Contexto, Decisión,
 Alternativas consideradas, Consecuencias, Estado.
@@ -24,6 +24,7 @@ Alternativas consideradas, Consecuencias, Estado.
 | ADR-0014 | Licencias | D14 | Aceptada |
 | ADR-0015 | Privacidad | D15 | Aceptada |
 | ADR-0016 | Límite industrial (ATEX/IECEx) | D16 | Aceptada |
+| ADR-0017 | Protocolo de captura y desambiguación de activos | D17 | Aceptada |
 
 ## Regla de cambio
 No se reabren decisiones. Un cambio exige un **ADR nuevo** que reemplace al anterior: el ADR

@@ -24,3 +24,4 @@ El activo tiene una identidad canónica en la plataforma y N identificadores ext
 ## Consecuencias
 - El esquema `Asset` + `AssetIdentifier` modela la equivalencia.
 - El flujo de captura puede registrar cualquier identificador y resolverlo al activo.
+- La desambiguación entre equipos en el procesamiento (plantillas o IA) se define en ADR-0017.

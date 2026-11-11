@@ -19,3 +19,5 @@ plantillas deterministas configurables, o IA que extrae estructura automáticame
 ## Consecuencias
 - `FormTemplate` / `FormResponse` en el esquema modelan la configuración.
 - La salida de IA nunca se acepta sin revisión humana (trazabilidad y confianza).
+- La atribución de medios a un activo por IA sigue el protocolo de ADR-0017 (delimitación
+  explícita + validación humana).
