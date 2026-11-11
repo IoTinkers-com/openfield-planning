@@ -7,6 +7,8 @@
 > presentación → integración externa.
 
 ## Repositorios (4)
+Organización GitHub: `iotinkers-com` (los 4 repos viven bajo esta organización).
+
 | Repo | Responsabilidad |
 | --- | --- |
 | `openfield-wearable` | Captura: app PWA, firmware y hardware de referencia. *(renombrado de `iotinkers-wearable`)* |
