@@ -55,7 +55,7 @@ def main(argv):
         print(f"[skip] no existe {root}; nada que validar aún.")
         return 0
 
-    schemas = {p.stem: load_json(p) for p in sorted(root.glob("*.schema.json"))}
+    schemas = {p.name.split(".")[0]: load_json(p) for p in sorted(root.glob("*.schema.json"))}
     if not schemas:
         print("[skip] sin esquemas (*.schema.json); nada que validar aún.")
         return 0
