@@ -107,13 +107,13 @@ Catálogo completo en `05-estructura-repos.md`. Selección clave del flujo:
 | Leaflet / OpenLayers | Mapas | BSD-2 | Bajo | — |
 | tusd / tus-js-client | Subida reanudable | MIT | Bajo | — |
 
-> Nota: licencias verificadas por búsqueda web (nov-2026). La licencia de `libonvif` /
-> `node-onvif` y la variante exacta de ffmpeg (LGPL vs GPL según build) quedan `[VERIFICAR]`.
+> Nota: licencias verificadas por búsqueda web (nov-2026). Librerías ONVIF (`node-onvif`,
+> `onvif`, `@2bad/onvif`) MIT; ffmpeg LGPL-2.1+ (pasa a GPL si se compila con `--enable-gpl`).
 
 ## 5. Decisión / Supuesto / Pregunta abierta
 - **Decisión:** las 8 etapas y su asignación a repos (wearable / platform / connectors).
 - **Decisión:** WGS84 interno (EPSG:4326) y export a UTM (zona local) sobre SIRGAS2000 / densificación nacional, para Latinoamérica (D2); offline-first (D4).
 - **Supuesto:** en Pro, PostGIS se usa como servicio (no se distribuye el binario combinado), por lo que GPLv2+ no fuerza liberar la app.
 - **Pregunta abierta:** ¿SeaweedFS o filesystem local para Pro? → se decide en `05-estructura-repos.md`.
-- **Pregunta abierta:** condiciones vigentes de las opciones de túnel HTTPS (D11) → `[VERIFICAR]` en ADR-0011.
-- **Pregunta abierta:** con alcance multi-país Latam, la privacidad (D15) exige verificación por país, no solo la ley chilena → `[VERIFICAR]` en ADR-0015.
+- **Decisión:** opciones de túnel HTTPS documentadas en ADR-0011 (Cloudflare Quick Tunnel para pruebas puntuales; túnel con nombre o Tailscale Funnel para URL estable).
+- **Pregunta abierta:** con alcance multi-país Latam, la privacidad (D15) exige verificación por país; el marco chileno queda documentado en ADR-0015.

@@ -71,4 +71,4 @@ Organización GitHub: `iotinkers-com`. Repos: `openfield-wearable`, `openfield-p
 - **Supuesto:** el presupuesto ≈ US$0 admite un VPS solo cuando exista un piloto pagado (D5).
 - **Supuesto:** "Industrial" no implica certificación inmediata, sino diseño para alcanzarla.
 - **Pregunta abierta:** alcance exacto del piloto Pro (qué cliente / instalación) — se define al iniciar la Fase 1.
-- **Pregunta abierta:** base legal del audio ambiental de terceros en Chile — `[VERIFICAR]` en ADR-0015.
+- **Pregunta abierta:** base legal del audio ambiental de terceros, por país — marco chileno documentado en ADR-0015.
