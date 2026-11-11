@@ -6,7 +6,7 @@ documentar instalaciones e inventarios industriales.
 
 ## Qué hay aquí
 - `AGENTS.md` — reglas para agentes (OpenCode y Devin).
-- `DECISIONS.md` — fuente única de las 16 decisiones.
+- `DECISIONS.md` — fuente única de las 17 decisiones.
 - `ROLES.md` — roles architect / writer / reviewer por capacidad.
 - `scripts/` — arnés de validación (esquemas, trazabilidad, documentación).
 - `00-09/` — documentos del paquete (se generan en las tandas A–F).

@@ -33,7 +33,7 @@ Fuente única de decisiones: `DECISIONS.md` · Roles: `ROLES.md` · Arnés: `scr
     confirmación explícita del usuario.
 
 ## Estructura mínima
-- `DECISIONS.md` — las 16 decisiones (fuente única).
+- `DECISIONS.md` — las 17 decisiones (fuente única).
 - `ROLES.md` — architect / writer / reviewer por capacidad (no por modelo).
 - `scripts/` — validación de esquemas, trazabilidad y chequeo de documentación.
 - `00-09/` — documentos del paquete (se crean en las tandas A–F).

@@ -67,7 +67,7 @@ Organización GitHub: `iotinkers-com`. Repos: `openfield-wearable`, `openfield-p
 | Estándares | Web APIs | STAC, OGC API Features | OPC UA, ONVIF, SensorThings |
 
 ## 10. Decisión / Supuesto / Pregunta abierta
-- **Decisión:** lo listado en `DECISIONS.md` (D1–D16).
+- **Decisión:** lo listado en `DECISIONS.md` (D1–D17).
 - **Supuesto:** el presupuesto ≈ US$0 admite un VPS solo cuando exista un piloto pagado (D5).
 - **Supuesto:** "Industrial" no implica certificación inmediata, sino diseño para alcanzarla.
 - **Pregunta abierta:** alcance exacto del piloto Pro (qué cliente / instalación) — se define al iniciar la Fase 1.

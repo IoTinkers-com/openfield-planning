@@ -104,7 +104,7 @@ CI = GitHub Actions (org `iotinkers-com`). Un commit por tanda es la práctica d
 | tusd / tus-js-client / tus-py-client | Subida reanudable | MIT | Bajo | — |
 | PROJ / pyproj | Reproyección UTM/SIRGAS2000 | X/MIT | Bajo | — |
 | ffmpeg | Procesamiento de video | LGPL-2.1+ (GPL con `--enable-gpl`) | Bajo | — |
-| flirpy | Lectura de térmica FLIR | `[VERIFICAR]` (se confirma al adoptar) | Medio (comunidad) | pylepton (`[VERIFICAR]`, antiguo) |
+| flirpy | Lectura de térmica FLIR | MIT (activo) | Bajo-Medio | pylepton (antiguo, descontinuado) |
 
 ## 7. Decisión / Supuesto / Pregunta abierta
 - **Decisión:** los JSON Schemas son la fuente de verdad en `openfield-platform/schemas/`; los demás repos los consumen versionados.

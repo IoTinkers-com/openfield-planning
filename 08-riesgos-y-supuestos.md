@@ -10,10 +10,10 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 | R1 | PWA en iOS pierde la cola (IndexedDB purgable) o no sincroniza en segundo plano | M | A | Offline-first con subida explícita al volver a primer plano; no depender de Background Sync; copia de respaldo opcional | ADR-0008 |
 | R2 | Whisper local en WASM no viable en el dispositivo | M | M | Respaldo de transcripción en plataforma; registrar el `engine` | ADR-0007 |
 | R3 | Licencia de un componente cambia a copyleft o queda sin mantenimiento (patrón MinIO) | M | A | Preferir Apache/MIT; evitar single-vendor; alternativa documentada por componente | ADR-0014 |
-| R4 | Precio/disponibilidad de hardware T1–T2 (MLX90640, Lepton 3.5) cambia | M | M | Fase 0 sin hardware; `[VERIFICAR]` precio al comprar en Fase 2 | ADR-0001 |
+| R4 | Precio/disponibilidad de hardware T1–T2 (MLX90640, Lepton 3.5) cambia | M | M | Fase 0 sin hardware; precio confirmado al comprar en Fase 2 | ADR-0001 |
 | R5 | La Ley 21.719 chilena entra en vigor antes de lo previsto o cambia su alcance | M | M | Consentimiento + indicador + retención por defecto; verificar por país | ADR-0015 |
 | R6 | La IA atribuye observaciones al equipo equivocado | M | A | Delimitación explícita por activo + validación humana; IA es apoyo, no identidad | ADR-0017 |
-| R7 | `flirpy`/`pylepton` abandonados o con licencia incompatible | M | M | Wrapper propio delgado sobre el SDK de FLIR si fallan; `[VERIFICAR]` licencia al adoptar | ADR-0001 |
+| R7 | `pylepton` descontinuado o con licencia poco clara | M | M | Usar `flirpy` (MIT, activo) o wrapper propio sobre el SDK de FLIR | ADR-0001 |
 | R8 | Pérdida de capturas por fallo del dispositivo | M | A | Cola local + `tus` reanudable; `id` idempotente; dedupe en ingesta | ADR-0004 |
 | R9 | Alcance multi-país Latam dispara costos de cumplimiento por país | M | M | Arrancar en Chile; `tenant_id` ya presente; verificación legal incremental | ADR-0013, ADR-0015 |
 | R10 | Presentar el sistema como "seguro" o apto para atmósferas explosivas | B | A | Prohibición explícita en alcance y documentación | ADR-0016 |
