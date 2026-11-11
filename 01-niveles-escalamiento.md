@@ -45,4 +45,4 @@ de integración sin cambiar el núcleo de captura/estructuración.
 - **Decisión:** los 3 niveles y su definición (D1, D5, D9, D16).
 - **Supuesto:** el hardware intermedio de Pro (MLX90640, Lepton 3.5) es el indicado en D1; su disponibilidad/precio vigentes se verifican al comprar en Fase 2 — `[VERIFICAR]`.
 - **Supuesto:** "Industrial" llega cuando un cliente lo exija, no por defecto.
-- **Pregunta abierta:** ¿el on-premise Industrial se entregará como Docker Compose, Helm o binario? → se decide en `05-estructura-repos.md`.
+- **Decisión:** despliegue = Docker Compose single-host (Maker/Pro) y Docker Compose como base en Industrial on-premise; Helm solo si el cliente opera Kubernetes (ver `05-estructura-repos.md`).

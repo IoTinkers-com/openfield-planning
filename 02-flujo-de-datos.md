@@ -114,6 +114,6 @@ Catálogo completo en `05-estructura-repos.md`. Selección clave del flujo:
 - **Decisión:** las 8 etapas y su asignación a repos (wearable / platform / connectors).
 - **Decisión:** WGS84 interno (EPSG:4326) y export a UTM (zona local) sobre SIRGAS2000 / densificación nacional, para Latinoamérica (D2); offline-first (D4).
 - **Supuesto:** en Pro, PostGIS se usa como servicio (no se distribuye el binario combinado), por lo que GPLv2+ no fuerza liberar la app.
-- **Pregunta abierta:** ¿SeaweedFS o filesystem local para Pro? → se decide en `05-estructura-repos.md`.
+- **Decisión:** storage Pro = SeaweedFS (interfaz S3-compatible); Maker = filesystem local (ver `05-estructura-repos.md`).
 - **Decisión:** opciones de túnel HTTPS documentadas en ADR-0011 (Cloudflare Quick Tunnel para pruebas puntuales; túnel con nombre o Tailscale Funnel para URL estable).
 - **Pregunta abierta:** con alcance multi-país Latam, la privacidad (D15) exige verificación por país; el marco chileno queda documentado en ADR-0015.
