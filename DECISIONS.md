@@ -23,7 +23,7 @@ ADR nuevo que reemplace al anterior.
 | # | Decisión | ADR |
 | --- | --- | --- |
 | D1 | **Térmica.** Visual (paleta) en Maker; radiométrica desde Pro. Contrato canónico de 4 niveles T0–T3. Todo adaptador normaliza a: matriz de temperaturas en °C + imagen renderizada + JSON (modelo de sensor, resolución, emisividad, temperatura reflejada, distancia, nivel T0–T3). El original propietario se conserva como evidencia. | ADR-0001 |
-| D2 | **Georreferenciación.** GPS en exteriores; QR/TAG de activo en interiores. WGS84 internamente; exportación a UTM/SIRGAS-Chile. | ADR-0002 |
+| D2 | **Georreferenciación.** GPS en exteriores; QR/TAG de activo en interiores. WGS84 (EPSG:4326) internamente; exportación a proyección UTM (zona según ubicación) sobre SIRGAS2000 / densificación nacional, para Latinoamérica (no limitado a Chile). | ADR-0002 |
 | D3 | **Identificación de activos.** QR propio (generado por la plataforma), TAG/placa existente del cliente y OCR, como identificadores equivalentes del mismo activo. | ADR-0003 |
 | D4 | **Conectividad.** Offline-first como base (ID único generado en el dispositivo, cola local, subidas reanudables con `tus`, sincronización de reloj). Live (RTMP/WebRTC) es opcional con tope de calidad y de datos configurable. Live a redes sociales es prioridad secundaria. | ADR-0004 |
 | D5 | **Despliegue.** Desarrollo local con Docker; VPS pequeño para demos live. Presupuesto ≈ US$0. Diseñado para autohospedarse (on-premise) más adelante. | ADR-0005 |
