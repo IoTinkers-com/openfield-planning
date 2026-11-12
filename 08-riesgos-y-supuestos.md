@@ -18,6 +18,7 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 | R9 | Alcance multi-país Latam dispara costos de cumplimiento por país | M | M | Arrancar en Chile; `tenant_id` ya presente; verificación legal incremental | ADR-0013, ADR-0015 |
 | R10 | Presentar el sistema como "seguro" o apto para atmósferas explosivas | B | A | Prohibición explícita en alcance y documentación | ADR-0016 |
 | R11 | La hoja de estilos (design tokens) duplicada entre `openfield-wearable` y `openfield-platform` se desincroniza al editar solo una copia | M | B | Comentario de "copia idéntica" en cada archivo + revisar ambas copias en cada cambio visual; reevaluar extraer paquete de UI si aparece un tercer consumidor | ADR-0018 |
+| R12 | El expediente de activo (`GET /assets/{id}`) escanea todos los documentos del tenant por tipo y filtra en Python (sin índice por `asset_id`/`session_id`); a escala Pro esto degrada el rendimiento | M | M | Aceptable en Fase 0/1 por volumen bajo; agregar índices o columnas generadas por `asset_id`/`session_id` cuando el volumen lo justifique | ADR-0019 |
 
 ## 2. Supuestos
 - PostGIS se usa como servicio (no se distribuye binario combinado) → GPLv2+ no fuerza liberar la app (ADR-0005).
@@ -25,12 +26,14 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 - "Industrial" es diseño para alcanzar certificación, no certificación inmediata (D16).
 - El paquete `openfield-schemas` inicia como copia *vendored* + chequeo de paridad (05).
 - En Fase 0 los simuladores son deterministas (misma entrada → misma salida) para usarse como *golden files* (07).
+- Una `Session` con `asset_id = null` (abarca varios activos) no aparece todavía en ningún expediente de activo (ADR-0019); se resuelve en una fase posterior.
 
 ## 3. Preguntas abiertas (consolidadas)
 - Alcance exacto del piloto Pro (qué cliente/instalación) — se define al iniciar Fase 1.
 - ¿Registro de paquetes (PyPI/npm) privado o público? — al iniciar Fase 1.
 - ¿*Golden files* versionados en `contracts/`? — al iniciar Fase 1.
 - Fecha exacta de vigencia de la Ley 21.719 (puede postergarse a 2027) — confirmar al implementar.
+- ¿Cómo presentar en el expediente las sesiones multi-activo (`Session.asset_id = null`)? — al definir el piloto Pro (ADR-0019).
 
 ## 4. Decisión / Supuesto / Pregunta abierta
 - **Decisión:** los riesgos R1–R10 se revisan al cierre de cada fase.

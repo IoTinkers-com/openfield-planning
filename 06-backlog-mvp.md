@@ -171,6 +171,35 @@
 
 ---
 
+## Presentación centrada en el activo (asset dossier)
+
+> El activo (no el documento) es la unidad central de presentación (ADR-0019, deriva de D12
+> y ADR-0017). Agregación de solo lectura sobre `documents`; no cambia `04-esquemas/`.
+
+### Épica UX-C: Expediente de activo y vista de sesión (ADR-0002, ADR-0009, ADR-0013, ADR-0017, ADR-0018, ADR-0019)
+
+- [ ] HUX-C1: `GET /assets/{id}` agrega identificadores, sesiones, medios, observaciones, transcripciones y respuestas de formulario del activo, incluidos los vinculados solo por `session_id` (ADR-0019, ADR-0013).
+  - **Criterios:** respeta `tenant_id` del activo; un documento sin `asset_id` propio pero cuya sesión pertenece al activo aparece igual en el expediente; `404` si el activo no existe.
+  - **Dependencias:** H0-A3, H0-B2, H1-C1.
+
+- [ ] HUX-C2: `GET /sessions/{id}` agrega los medios, observaciones y transcripciones de una sesión, con el resumen del activo al que pertenece (ADR-0019).
+  - **Criterios:** `404` si la sesión no existe; incluye un resumen `{id, name}` del activo cuando `asset_id` no es `null`.
+  - **Dependencias:** H0-A3.
+
+- [ ] HUX-C3: Una sola ruta sirve la vista HTML o el JSON agregado según el encabezado `Accept`, sin introducir un prefijo `/api` (ADR-0019, ADR-0018).
+  - **Criterios:** una navegación de navegador (`Accept: text/html`) recibe la vista; un `fetch()`/prueba automatizada recibe el JSON agregado en la misma URL.
+  - **Dependencias:** HUX-C1, HUX-C2.
+
+- [ ] HUX-C4: Navegación dashboard → expediente de activo → vista de sesión → medio original (ADR-0017, ADR-0018, ADR-0019).
+  - **Criterios:** el nombre del activo en la agrupación del dashboard enlaza a su expediente; cada sesión del expediente enlaza a su vista; cada medio enlaza al archivo original.
+  - **Dependencias:** HUX-A4, HUX-C1, HUX-C2.
+
+- [ ] HUX-C5: La tabla "Registro" del dashboard pasa a un panel secundario colapsado por defecto (ADR-0019).
+  - **Criterios:** al cargar el dashboard, el registro de documentos está colapsado; el mapa, la galería por activo y los expedientes son la vista principal.
+  - **Dependencias:** HUX-A2.
+
+---
+
 ## Trazabilidad
 Todo ítem `- [ ]` cita al menos un ADR. `check_traceability.py` verifica que cada ADR citado existe
 y declara `Estado:`. Los criterios de aceptación son verificables de forma automática o manual
