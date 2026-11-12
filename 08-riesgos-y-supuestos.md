@@ -17,6 +17,7 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 | R8 | Pérdida de capturas por fallo del dispositivo | M | A | Cola local + `tus` reanudable; `id` idempotente; dedupe en ingesta | ADR-0004 |
 | R9 | Alcance multi-país Latam dispara costos de cumplimiento por país | M | M | Arrancar en Chile; `tenant_id` ya presente; verificación legal incremental | ADR-0013, ADR-0015 |
 | R10 | Presentar el sistema como "seguro" o apto para atmósferas explosivas | B | A | Prohibición explícita en alcance y documentación | ADR-0016 |
+| R11 | La hoja de estilos (design tokens) duplicada entre `openfield-wearable` y `openfield-platform` se desincroniza al editar solo una copia | M | B | Comentario de "copia idéntica" en cada archivo + revisar ambas copias en cada cambio visual; reevaluar extraer paquete de UI si aparece un tercer consumidor | ADR-0018 |
 
 ## 2. Supuestos
 - PostGIS se usa como servicio (no se distribuye binario combinado) → GPLv2+ no fuerza liberar la app (ADR-0005).

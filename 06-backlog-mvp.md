@@ -119,6 +119,58 @@
 
 ---
 
+## Mejoras de UX/UI (revisión post-Fase 0/1)
+
+> Hallazgos de la revisión de experiencia/interfaz sobre el dashboard y la PWA de captura ya
+> construidos (sin hardware nuevo, sin romper contratos de datos). ADR-0018 documenta cómo se
+> mantiene la consistencia visual entre ambas superficies y su navegación cruzada.
+
+### Épica UX-A: Dashboard (ADR-0002, ADR-0009, ADR-0013, ADR-0017, ADR-0018)
+
+- [ ] HUX-A1: Navegación cruzada dashboard ↔ captura mediante un enlace directo en la barra superior de cada superficie (ADR-0018).
+  - **Criterios:** un clic desde el dashboard abre `/capture/`; un clic desde la captura vuelve al dashboard.
+  - **Dependencias:** H0-C1, H1-A1.
+
+- [ ] HUX-A2: Filtros por `tenant_id` y `entity_type` en el dashboard, reflejados en la URL (ADR-0013, ADR-0009).
+  - **Criterios:** cambiar un filtro actualiza el mapa, la galería y la tabla sin recargar la página; la URL resultante es compartible (bookmarkable).
+  - **Dependencias:** H0-C1.
+
+- [ ] HUX-A3: Popups del mapa con la miniatura real del medio en vez de solo el `id` (ADR-0002).
+  - **Criterios:** el popup de un marcador muestra la imagen de `assets.primary.href` (o un marcador de "sin imagen") y enlaza a su tarjeta en la galería.
+  - **Dependencias:** H0-C1.
+
+- [ ] HUX-A4: Agrupar medios por activo (`asset_id`) resolviendo el nombre del `Asset` (ADR-0017).
+  - **Criterios:** la galería se organiza en grupos colapsables por activo; un medio sin activo resuelto se etiqueta "Sin activo asignado" en vez de omitirse.
+  - **Dependencias:** H0-C1, H0-B2.
+
+- [ ] HUX-A5: Estados vacíos claros cuando no hay medios o no hay resultados con los filtros aplicados (ADR-0018).
+  - **Criterios:** sin datos se muestra un mensaje con enlace a `/capture/`; con filtros sin resultados se ofrece un botón "Limpiar filtros".
+  - **Dependencias:** HUX-A2.
+
+- [ ] HUX-A6: Layout responsive (móvil/tablet/escritorio) del dashboard (ADR-0008, ADR-0018).
+  - **Criterios:** en un viewport de 375px de ancho, los filtros, el mapa y la galería no requieren scroll horizontal.
+  - **Dependencias:** H0-C1.
+
+### Épica UX-B: PWA de captura (ADR-0004, ADR-0008, ADR-0015, ADR-0018)
+
+- [ ] HUX-B1: Indicador visual de los pasos del flujo: consentimiento → sesión → captura → sincronizar (ADR-0008, ADR-0015).
+  - **Criterios:** el paso activo se resalta; un paso completado cambia de estado visualmente sin recargar la página.
+  - **Dependencias:** H1-A1, H1-A2.
+
+- [ ] HUX-B2: Indicador de conexión a internet y contador de elementos pendientes por sincronizar (ADR-0004).
+  - **Criterios:** el indicador cambia entre "en línea" y "sin conexión" con los eventos `online`/`offline` del navegador; el contador de pendientes refleja el tamaño real de la cola local.
+  - **Dependencias:** H1-A1, H1-A3.
+
+- [ ] HUX-B3: Mensajes de error amigables en español para fallas de cámara, micrófono o red, sin perder el detalle técnico en el registro/log (ADR-0008).
+  - **Criterios:** un permiso denegado o una falla de red muestra un mensaje accionable (qué hacer), no el mensaje crudo del navegador; el log conserva el detalle técnico.
+  - **Dependencias:** H1-A1.
+
+- [ ] HUX-B4: Diseño móvil-first con objetivos táctiles grandes y navegación de vuelta al dashboard (ADR-0008, ADR-0018).
+  - **Criterios:** los botones principales son usables con el pulgar en un iPhone; existe un enlace visible de vuelta al dashboard en todo momento.
+  - **Dependencias:** H1-A1.
+
+---
+
 ## Trazabilidad
 Todo ítem `- [ ]` cita al menos un ADR. `check_traceability.py` verifica que cada ADR citado existe
 y declara `Estado:`. Los criterios de aceptación son verificables de forma automática o manual
