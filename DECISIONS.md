@@ -1,4 +1,4 @@
-# DECISIONS.md — fuente única de decisiones
+﻿# DECISIONS.md — fuente única de decisiones
 
 > **Contexto:** IoTinkers · **OpenField**. Captura georreferenciada de terreno (imagen/video
 > RGB y térmicos; audio del operador a texto) para documentar el estado de instalaciones e
@@ -16,7 +16,7 @@ Organización GitHub: `iotinkers-com` (los 4 repos viven bajo esta organización
 | `openfield-connectors` | Adaptadores a dispositivos/sistemas externos + `simulators/`. |
 | `openfield-planning` | Este paquete documental. |
 
-## Decisiones (D1–D22)
+## Decisiones (D1–D23)
 Cada decisión tendrá un ADR en `03-adr/`. Regla de cambio: no reabrir; un cambio exige un
 ADR nuevo que reemplace al anterior.
 
@@ -44,3 +44,4 @@ ADR nuevo que reemplace al anterior.
 | D20 | **Registro y ciclo de vida de activos.** Esquema `asset-type` (atributos configurables y activables; estructura ISO 14224) + campos opcionales en `Asset` (tipo, estado, atributos, jerarquía `parent_id`, ubicación funcional, fabricante/modelo/serie, criticidad); estados `planned`/`in_service`/`standby`/`out_of_service`/`decommissioned` (terminal, con motivo); referencia ISO 55001 §7.5/7.6 (información de gestión definida por la organización). | ADR-0020 |
 | D21 | **Edición, baja lógica y auditoría.** Mutaciones por endpoints dedicados (la ingesta sigue idempotente y solo de creación); borrado lógico restaurable (`deleted_at`); historial `document_revisions` con antes/después, origen, lote, motivo y `op_id` idempotente; fechas siempre del servidor; purga física y autenticación en backlog. | ADR-0021 |
 | D22 | **Precarga CSV y verificación en terreno.** Plantilla CSV por tipo, vista previa (dry-run) y confirmación; emparejamiento por TAG (o serie); re-import idempotente que nunca pisa atributos verificados (conflicto explícito); `data_source`, `verification_status` y `attribute_verification` por activo y por atributo; lotes de importación con avance. | ADR-0022 |
+| D23 | **Entrada de texto/voz en terreno y cámaras.** Dictado del teclado del SO como vía principal para comentarios (inputs nativos; no Web Speech API); nota de voz con iniciar/detener libre, tope configurable, transcripción tras sincronizar y texto editable; cámaras enumeradas por `enumerateDevices`/`deviceId`; cola y catálogo en IndexedDB. Complementa ADR-0007/0008. | ADR-0023 |

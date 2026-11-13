@@ -30,6 +30,7 @@ Alternativas consideradas, Consecuencias, Estado.
 | ADR-0020 | Registro de activos y ciclo de vida | D20 | Aceptada |
 | ADR-0021 | Edición, baja lógica y auditoría de documentos | D21 | Aceptada |
 | ADR-0022 | Precarga de activos por CSV y verificación en terreno | D22 | Aceptada |
+| ADR-0023 | Entrada de texto/voz en terreno y selección de cámara | D23 | Aceptada |
 
 ## Regla de cambio
 No se reabren decisiones. Un cambio exige un **ADR nuevo** que reemplace al anterior: el ADR

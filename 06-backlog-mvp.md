@@ -270,6 +270,36 @@
   - **Criterios:** en producción CORS queda limitado a orígenes conocidos y se sirven cabeceras CSP sin romper Leaflet ni las vistas.
   - **Dependencias:** H-AUTH, despliegue en VPS (H1-B1).
 
+### Épica CT: Captura y verificación en terreno — PWA (ADR-0023, ADR-0008, ADR-0022, ADR-0017)
+
+- [ ] CT-1: Cola persistente en IndexedDB (`store.js` + `createPersistentQueue`) con reintentos que conservan `attempts`/`last_error` (ADR-0023, ADR-0004).
+  - **Criterios:** encolar y recargar la página conserva los pendientes; `flush` sincroniza en orden y deja los fallidos con `attempts=1` y `last_error` acotado.
+  - **Dependencias:** ninguna.
+- [ ] CT-2: Catálogo offline de activos y tipos (`assets.js` + caché en `kv`) con búsqueda sin acentos y pendientes primero (ADR-0023, ADR-0022).
+  - **Criterios:** con conexión descarga `/admin/assets` y `/admin/asset-types`; sin conexión usa la caché guardada; excluye `decommissioned` y eliminados.
+  - **Dependencias:** CT-1, GA-7.
+- [ ] CT-3: `capture.js` con operador configurable, `endSession` y `recordNote` válidos contra esquema (ADR-0023, ADR-0017).
+  - **Criterios:** `startSession` acepta `operator` sin romper los defaults; `endSession` fija `ended_at`; `recordNote` emite un `Observation` válido.
+  - **Dependencias:** ninguna.
+- [ ] CT-4: Capa de hardware: `listCameras`/`openCamera(deviceId)`/`startAudioRecording` en `web.js` y `simulated.js` (ADR-0023).
+  - **Criterios:** `enumerateDevices` filtra `videoinput` con etiqueta de respaldo; `openCamera` con `deviceId` exacto y respaldo `facingMode`; `startAudioRecording` devuelve `stop()` con `blob`, `durationMs`, `mimeType`, `autoStopped` y libera las pistas.
+  - **Dependencias:** ninguna.
+- [ ] CT-5: Sincronización (`sync.js` + plataforma): `transcribeAudio` con `language`, `postVerify`, `endSessionRemote`, y `POST /sessions/{id}/end` + `language` en `/transcribe` (ADR-0023, ADR-0022).
+  - **Criterios:** `end` es idempotente, exige `ended_at ≥ started_at` y rechaza fechas futuras (> 5 min); `/transcribe` acepta `language` ≤ 10 caracteres.
+  - **Dependencias:** GA-4.
+- [ ] CT-6: Selector de activo en la PWA: búsqueda, "solo pendientes", alta de activo nuevo encolada, sesión delimitada por activo (ADR-0023, ADR-0017).
+  - **Criterios:** elegir un activo cierra la sesión abierta de otro activo (encola `session-end`) e inicia una nueva; "Nuevo activo" encola asset + identificador con `data_source: "field"`.
+  - **Dependencias:** CT-2, CT-3.
+- [ ] CT-7: Verificar ficha técnica en terreno: confirmar/corregir/no verificable por atributo + "activo no encontrado" (ADR-0022, ADR-0023).
+  - **Criterios:** el formulario se genera del tipo; corregir valida el tipo del atributo antes de encolar; el guardado encola `verify` con `op_id` idempotente y actualiza la barra de progreso.
+  - **Dependencias:** CT-5, CT-6.
+- [ ] CT-8: Captura con cámara elegida y nota de voz iniciar/detener libre (ADR-0023, ADR-0015).
+  - **Criterios:** el selector de cámaras muestra etiquetas tras el primer permiso y la elección persiste; la nota de voz muestra cronómetro e indicador rojo (D15), tope configurable, texto editable antes de guardar; se elimina el input de duración fija.
+  - **Dependencias:** CT-4, CT-6.
+- [ ] CT-9: Cola y fin de sesión: lista de pendientes con detalle, sincronización por tipo de ítem y `session-end` al terminar o cambiar de activo (ADR-0023, ADR-0008).
+  - **Criterios:** cada `kind` se sincroniza con su endpoint (media → upload+ingest, audio → transcribe+ingest, verify → postVerify, session-end → end, doc → ingest); tras sincronizar se refresca el catálogo; al volver a primer plano se avisa el número de pendientes.
+  - **Dependencias:** CT-5, CT-7, CT-8.
+
 ---
 
 ## Trazabilidad
