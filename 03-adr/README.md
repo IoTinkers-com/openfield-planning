@@ -1,6 +1,6 @@
 # 03 · Registro de decisiones de arquitectura (ADR)
 
-> Estado: 19/19 aceptadas · Tanda B + revisión UX/UI + presentación por activo · OpenField (IoTinkers)
+> Estado: 22/22 aceptadas · Tanda B + revisión UX/UI + presentación por activo + gestión de activos · OpenField (IoTinkers)
 
 Cada ADR corresponde a una decisión de `DECISIONS.md`. Formato: Contexto, Decisión,
 Alternativas consideradas, Consecuencias, Estado.
@@ -27,6 +27,9 @@ Alternativas consideradas, Consecuencias, Estado.
 | ADR-0017 | Protocolo de captura y desambiguación de activos | D17 | Aceptada |
 | ADR-0018 | Consistencia visual y navegación entre dashboard y captura (UX/UI) | D18 | Aceptada |
 | ADR-0019 | Presentación centrada en el activo (asset dossier) | D19 | Aceptada |
+| ADR-0020 | Registro de activos y ciclo de vida | D20 | Aceptada |
+| ADR-0021 | Edición, baja lógica y auditoría de documentos | D21 | Aceptada |
+| ADR-0022 | Precarga de activos por CSV y verificación en terreno | D22 | Aceptada |
 
 ## Regla de cambio
 No se reabren decisiones. Un cambio exige un **ADR nuevo** que reemplace al anterior: el ADR

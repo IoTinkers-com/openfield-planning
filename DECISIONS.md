@@ -16,7 +16,7 @@ Organización GitHub: `iotinkers-com` (los 4 repos viven bajo esta organización
 | `openfield-connectors` | Adaptadores a dispositivos/sistemas externos + `simulators/`. |
 | `openfield-planning` | Este paquete documental. |
 
-## Decisiones (D1–D17)
+## Decisiones (D1–D22)
 Cada decisión tendrá un ADR en `03-adr/`. Regla de cambio: no reabrir; un cambio exige un
 ADR nuevo que reemplace al anterior.
 
@@ -41,3 +41,6 @@ ADR nuevo que reemplace al anterior.
 | D17 | **Desambiguación de activos.** Protocolo de captura por activo (identificador explícito al inicio) + reglas/agentes de atribución; la IA es apoyo, nunca la fuente primaria de identidad, con validación humana. Deriva de D3 y D6. | ADR-0017 |
 | D18 | **Consistencia visual y navegación UX/UI.** Design tokens CSS duplicados entre repos (mismo patrón que la capa de hardware/captura, sin paquete de UI compartido todavía); enlace directo entre dashboard y captura (ruta relativa en mismo origen, URL absoluta en modo standalone de desarrollo). | ADR-0018 |
 | D19 | **Presentación centrada en el activo.** El activo (no el documento) es la unidad central de presentación; `GET /assets/{id}` y `GET /sessions/{id}` agregan por lectura los documentos relacionados (sin cambiar el contrato); una sola ruta sirve HTML o JSON según `Accept`. | ADR-0019 |
+| D20 | **Registro y ciclo de vida de activos.** Esquema `asset-type` (atributos configurables y activables; estructura ISO 14224) + campos opcionales en `Asset` (tipo, estado, atributos, jerarquía `parent_id`, ubicación funcional, fabricante/modelo/serie, criticidad); estados `planned`/`in_service`/`standby`/`out_of_service`/`decommissioned` (terminal, con motivo); referencia ISO 55001 §7.5/7.6 (información de gestión definida por la organización). | ADR-0020 |
+| D21 | **Edición, baja lógica y auditoría.** Mutaciones por endpoints dedicados (la ingesta sigue idempotente y solo de creación); borrado lógico restaurable (`deleted_at`); historial `document_revisions` con antes/después, origen, lote, motivo y `op_id` idempotente; fechas siempre del servidor; purga física y autenticación en backlog. | ADR-0021 |
+| D22 | **Precarga CSV y verificación en terreno.** Plantilla CSV por tipo, vista previa (dry-run) y confirmación; emparejamiento por TAG (o serie); re-import idempotente que nunca pisa atributos verificados (conflicto explícito); `data_source`, `verification_status` y `attribute_verification` por activo y por atributo; lotes de importación con avance. | ADR-0022 |

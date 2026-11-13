@@ -11,7 +11,7 @@ Esquema canónico propio, simple y versionado. Draft **JSON Schema 2020-12**.
 - Un cambio que rompa compatibilidad no es una versión: es un esquema nuevo con otro nombre.
 
 ## Campos comunes en todo documento
-`tenant_id` (D13 · multiempresa) y `schema_version` (D9) aparecen en los 11 esquemas, además
+`tenant_id` (D13 · multiempresa) y `schema_version` (D9) aparecen en los 12 esquemas, además
 de un `id` único (UUID generado en el dispositivo cuando aplica, D4).
 
 ## Esquemas
@@ -19,7 +19,8 @@ de un `id` único (UUID generado en el dispositivo cuando aplica, D4).
 | --- | --- | --- |
 | `session.schema.json` | Sesión de captura | — |
 | `device.schema.json` | Dispositivo + `device_capabilities` | — |
-| `asset.schema.json` | Activo (identidad canónica) | — |
+| `asset.schema.json` | Activo (identidad canónica + registro y ciclo de vida) | D20 (ADR-0020), verificación D22 |
+| `asset-type.schema.json` | Tipo de activo con atributos configurables | D20 (estructura ISO 14224) |
 | `asset-identifier.schema.json` | Identificador externo (QR/TAG/OCR) | D3 |
 | `media-item.schema.json` | Medio capturado | STAC Item (id, geometry, datetime, assets) |
 | `thermal-capture.schema.json` | Térmica T0–T3 | D1 (matriz °C + imagen + JSON) |

@@ -200,6 +200,78 @@
 
 ---
 
+## Gestión de activos (registro, ciclo de vida y precarga)
+
+> OpenField como plataforma de control y seguimiento del estado de activos industriales:
+> registro con atributos configurables por tipo (ISO 55001 §7.5/7.6, estructura ISO 14224),
+> ciclo de vida con desincorporación no destructiva, auditoría de cambios y precarga CSV
+> con verificación en terreno (ADR-0020, ADR-0021, ADR-0022).
+
+### Épica GA: Registro y ciclo de vida (ADR-0020, ADR-0021, ADR-0013)
+
+- [ ] GA-1: Esquema `asset-type` y campos nuevos de `Asset`, en paridad en los 4 repos (ADR-0020, ADR-0009).
+  - **Criterios:** `validate_schemas.py` pasa con 12 esquemas en planning, platform, wearable y connectors; cada ejemplo nuevo valida/falla según corresponda.
+  - **Dependencias:** H0-A2.
+- [ ] GA-2: CRUD de tipos de activo con atributos activables; un atributo con datos no se elimina, se desactiva (ADR-0020).
+  - **Criterios:** `select` sin `options` o claves duplicadas se rechazan (422); quitar un atributo con valores en algún activo devuelve 422 y desactivarlo funciona.
+  - **Dependencias:** GA-1.
+- [ ] GA-3: Enrolar activo validando sus atributos contra el tipo (ADR-0020).
+  - **Criterios:** falta un atributo `required` o un `select` inválido → 422; un `tag` duplicado en el tenant → 409; se crea el `AssetIdentifier` correspondiente.
+  - **Dependencias:** GA-2.
+- [ ] GA-4: Editar activo con historial de revisiones (ADR-0021).
+  - **Criterios:** `PATCH /assets/{id}` actualiza campos permitidos, rechaza cambiar `status`/verificación por esa vía y registra `document_revisions` con antes/después.
+  - **Dependencias:** GA-3.
+- [ ] GA-5: Cambio de estado con motivo; `decommissioned` es terminal (ADR-0020).
+  - **Criterios:** `out_of_service`/`decommissioned` sin motivo → 422; cualquier transición desde `decommissioned` → 409; la ingesta de capturas hacia un activo desincorporado → 409.
+  - **Dependencias:** GA-3.
+- [ ] GA-6: Eliminación lógica y restauración; los eliminados no aparecen en listados, mapa, STAC ni resolución (ADR-0021).
+  - **Criterios:** `DELETE` + `include_deleted` + `restore` funcionan; eliminar un padre con hijos activos → 409; `/resolve` ignora identificadores de activos eliminados.
+  - **Dependencias:** GA-4.
+- [ ] GA-7: Panel `/admin/` (tipos, activos, importar, estados) (ADR-0020, ADR-0018).
+  - **Criterios:** permite crear/editar tipos con su tabla de atributos, enrolar/editar activos con formulario según el tipo, cambiar estado, eliminar y restaurar; consistencia visual con `openfield.css`.
+  - **Dependencias:** GA-2, GA-3, GA-6.
+- [ ] GA-8: Expediente con ficha técnica, estado de verificación e historial; `Vary: Accept` (ADR-0019, ADR-0021).
+  - **Criterios:** `/assets/{id}` muestra atributos del tipo con su verificación, historial de revisiones, padre e hijos; las respuestas llevan `Vary: Accept` y `Cache-Control: no-store`.
+  - **Dependencias:** GA-4, HUX-C1.
+
+### Épica PV: Precarga CSV y verificación (ADR-0022)
+
+- [ ] PV-1: Plantilla CSV por tipo (`;`, UTF-8 con BOM) (ADR-0022).
+  - **Criterios:** `GET /admin/asset-types/{id}/csv-template` devuelve `text/csv` con columnas base + `attr:<key>` solo de atributos activos, en el orden del tipo.
+  - **Dependencias:** GA-2.
+- [ ] PV-2: Vista previa (dry-run) con errores por fila/columna y conflictos (ADR-0022).
+  - **Criterios:** `dry_run=true` (defecto) no escribe nada; reporta errores con `row`/`column`, columnas desconocidas como advertencias y una vista previa de acciones.
+  - **Dependencias:** PV-1.
+- [ ] PV-3: Importación idempotente por TAG o serie que no pisa atributos verificados (ADR-0022, ADR-0003).
+  - **Criterios:** importar dos veces el mismo archivo da `created=0`/`unchanged`; un valor distinto sobre un atributo `confirmed`/`corrected` se reporta como conflicto sin sobrescribir; celda vacía = sin cambio.
+  - **Dependencias:** PV-2, GA-3.
+- [ ] PV-4: Lotes de importación con avance de verificación (ADR-0022).
+  - **Criterios:** `GET /admin/import-batches` muestra conteos del lote y el progreso calculado en vivo sobre los activos importados.
+  - **Dependencias:** PV-3.
+- [ ] PV-5: Verificación por atributo vía API (`/assets/{id}/verify`) con `op_id` idempotente (ADR-0022, ADR-0004).
+  - **Criterios:** `confirm` sin valor → 422; `correct` con valor inválido → 422; el estado del activo pasa `pending`→`in_progress`→`verified`; `asset_not_found` marca `not_found`; mismo `op_id` → `already_applied` sin revisión extra.
+  - **Dependencias:** PV-3, GA-4.
+
+### Épica PB: Pendientes para fases posteriores (ADR-0013, ADR-0015, ADR-0021)
+
+- [ ] H-AUTH: Autenticación y autorización (roles admin/operador) en endpoints de escritura y en el panel (ADR-0013, ADR-0021).
+  - **Criterios:** las rutas de mutación y `/admin/` exigen credenciales con rol suficiente; las acciones registran el actor real.
+  - **Dependencias:** GA-7 (panel), despliegue con usuarios reales.
+- [ ] H-PURGE: Purga física por privacidad o retención, solo admin autenticado (ADR-0015, ADR-0021).
+  - **Criterios:** existe un mecanismo documentado para eliminar físicamente un documento y sus medios según política de retención, previa autorización.
+  - **Dependencias:** H-AUTH.
+- [ ] H-EXPORT: Exportar el registro de activos a CSV con protección contra inyección de fórmulas (ADR-0022).
+  - **Criterios:** exporta activos con sus atributos; los valores que comienzan por `=`, `+`, `-` o `@` se prefijan para evitar ejecución de fórmulas en hojas de cálculo.
+  - **Dependencias:** PV-3.
+- [ ] H-ALEMBIC: Migraciones con Alembic en vez de ALTER idempotente (ADR-0021).
+  - **Criterios:** el esquema de BD se versiona con migraciones reproducibles en SQLite y PostgreSQL.
+  - **Dependencias:** GA-1 (primera migración aplicada).
+- [ ] H-CORS: Restringir CORS y agregar encabezados de seguridad completos/CSP (ADR-0005).
+  - **Criterios:** en producción CORS queda limitado a orígenes conocidos y se sirven cabeceras CSP sin romper Leaflet ni las vistas.
+  - **Dependencias:** H-AUTH, despliegue en VPS (H1-B1).
+
+---
+
 ## Trazabilidad
 Todo ítem `- [ ]` cita al menos un ADR. `check_traceability.py` verifica que cada ADR citado existe
 y declara `Estado:`. Los criterios de aceptación son verificables de forma automática o manual
