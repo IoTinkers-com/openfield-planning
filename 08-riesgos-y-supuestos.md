@@ -36,6 +36,7 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 - El `actor` del historial es "admin" hasta que exista autenticación (ADR-0021, H-AUTH).
 - La clave de emparejamiento del CSV es el TAG (o `serial_number`); nunca el nombre (ADR-0022).
 - Un dato importado nace `pending`: nunca se presenta como verificado en terreno (ADR-0022).
+- La reasignación de un medio a otro activo es una corrección humana auditada, no un flujo automático (ADR-0017).
 
 ## 3. Preguntas abiertas (consolidadas)
 - Alcance exacto del piloto Pro (qué cliente/instalación) — se define al iniciar Fase 1.

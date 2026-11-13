@@ -300,6 +300,27 @@
   - **Criterios:** cada `kind` se sincroniza con su endpoint (media → upload+ingest, audio → transcribe+ingest, verify → postVerify, session-end → end, doc → ingest); tras sincronizar se refresca el catálogo; al volver a primer plano se avisa el número de pendientes.
   - **Dependencias:** CT-5, CT-7, CT-8.
 
+### Épica EC: Edición y borrado de capturas (ADR-0021, ADR-0017, ADR-0006)
+
+- [ ] EC-1: `PATCH /documents/{id}` con lista blanca de campos editables por entidad y `reason` (ADR-0021).
+  - **Criterios:** transcript `text`/`language`, observation `type`/`value`/`unit`/`metadata`, form-response `values` (revalidado contra la plantilla)/`completed_by`, media-item `asset_id`/`metadata`, session `operator`/`ended_at`, asset-identifier `value`/`type`/`source`; clave fuera de la lista → 422; cada edición guarda revisión con el motivo.
+  - **Dependencias:** GA-4.
+- [ ] EC-2: Restricciones de la edición genérica (ADR-0021, ADR-0017).
+  - **Criterios:** `asset`/`asset-type` → 409 (usan sus rutas); `device`/`sync-event`/`thermal-capture` → 409; documento eliminado → 409; `media-item.asset_id` debe existir y no estar eliminado ni `decommissioned`; `asset-identifier.value` único por tenant y tipo → 409 en conflicto.
+  - **Dependencias:** EC-1.
+- [ ] EC-3: `DELETE /documents/{id}?reason=` lógico con restauración (ADR-0021).
+  - **Criterios:** soft delete para entidades de captura (media-item, observation, transcript, form-response, session, thermal-capture, asset-identifier); `asset`/`asset-type` → 409; `op_id` idempotente; doble borrado → 409; `/documents/{id}/restore` lo devuelve.
+  - **Dependencias:** EC-1.
+- [ ] EC-4: Dossiers muestran lo eliminado con `include_deleted=true` (ADR-0021, ADR-0019).
+  - **Criterios:** `GET /assets/{id}` y `GET /sessions/{id}` aceptan `include_deleted=true`; los documentos borrados se devuelven marcados con `_deleted_at`.
+  - **Dependencias:** EC-3.
+- [ ] EC-5: Edición/borrado en línea en los dossiers (ADR-0021, ADR-0019).
+  - **Criterios:** cada ítem del expediente y de la sesión ofrece ✎ editar, 🗑 eliminar (con motivo) y 🕘 historial; checkbox "mostrar eliminados" los muestra atenuados con Restaurar; el diálogo de historial lista revisiones con claves cambiadas.
+  - **Dependencias:** EC-4.
+- [ ] EC-6: Edición de ítems pendientes en la cola de la PWA (ADR-0021, ADR-0023).
+  - **Criterios:** antes de sincronizar se puede editar el texto de transcript/nota, descartar media/audio, deshacer una verificación (revirtiendo el catálogo en caché) y editar el activo nuevo encolado; la edición se bloquea mientras `flush` está en curso.
+  - **Dependencias:** CT-9.
+
 ---
 
 ## Trazabilidad
