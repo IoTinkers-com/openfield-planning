@@ -16,7 +16,7 @@ Organización GitHub: `iotinkers-com` (los 4 repos viven bajo esta organización
 | `openfield-connectors` | Adaptadores a dispositivos/sistemas externos + `simulators/`. |
 | `openfield-planning` | Este paquete documental. |
 
-## Decisiones (D1–D23)
+## Decisiones (D1–D24)
 Cada decisión tendrá un ADR en `03-adr/`. Regla de cambio: no reabrir; un cambio exige un
 ADR nuevo que reemplace al anterior.
 
@@ -45,3 +45,4 @@ ADR nuevo que reemplace al anterior.
 | D21 | **Edición, baja lógica y auditoría.** Mutaciones por endpoints dedicados (la ingesta sigue idempotente y solo de creación); borrado lógico restaurable (`deleted_at`); historial `document_revisions` con antes/después, origen, lote, motivo y `op_id` idempotente; fechas siempre del servidor; purga física y autenticación en backlog. | ADR-0021 |
 | D22 | **Precarga CSV y verificación en terreno.** Plantilla CSV por tipo, vista previa (dry-run) y confirmación; emparejamiento por TAG (o serie); re-import idempotente que nunca pisa atributos verificados (conflicto explícito); `data_source`, `verification_status` y `attribute_verification` por activo y por atributo; lotes de importación con avance. | ADR-0022 |
 | D23 | **Entrada de texto/voz en terreno y cámaras.** Dictado del teclado del SO como vía principal para comentarios (inputs nativos; no Web Speech API); nota de voz con iniciar/detener libre, tope configurable, transcripción tras sincronizar y texto editable; cámaras enumeradas por `enumerateDevices`/`deviceId`; cola y catálogo en IndexedDB. Complementa ADR-0007/0008. | ADR-0023 |
+| D24 | **Captura por pantallas, cámara a pantalla completa y confirmación de fotos.** Una pantalla por paso enrutada por hash (Atrás del sistema navega; botón propio con respaldo al padre); cámara en overlay CSS a pantalla completa con controles detectados en runtime (cambiar cámara, linterna, zoom, miniatura); confirmación por foto (Repetir/Usar) con leyenda opcional y categoría configurable por tipo de activo en media-item.metadata; GPS por watchPosition; sesión persistente en kv. Complementa ADR-0018/0023. | ADR-0024 |

@@ -35,3 +35,4 @@ Alternativas consideradas, Consecuencias, Estado.
 ## Regla de cambio
 No se reabren decisiones. Un cambio exige un **ADR nuevo** que reemplace al anterior: el ADR
 reemplazado pasa a estado `Reemplazado por ADR-XXXX` y se mantiene en el Ã­ndice como histÃ³rico.
+| ADR-0024 | Captura por pantallas, cámara a pantalla completa y confirmación de fotos | D24 | Aceptada |

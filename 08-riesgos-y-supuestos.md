@@ -24,6 +24,8 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 | R15 | El CSV del cliente trae codificación, separador decimal o tags duplicados inconsistentes y corrompe el registro | A | M | Vista previa (dry-run) obligatoria con reporte por fila/columna; emparejamiento por TAG; re-import idempotente que no pisa lo verificado; límites de tamaño | ADR-0022 |
 | R16 | El dictado del teclado de iOS puede no estar disponible sin conexión según modelo/idioma | M | M | Nota de voz offline con transcripción en plataforma al sincronizar (respaldado por ADR-0007); supuesto a validar en el iPhone de pruebas | ADR-0023 |
 | R17 | Cuota y purga de IndexedDB en iOS con blobs de medios puede perder la cola offline | M | A | Sincronizar pronto; avisar el tamaño/pendientes de la cola; no depender de Background Sync (ADR-0008) | ADR-0023, ADR-0008 |
+| R18 | Soporte variable de `torch`, `zoom` e `ImageCapture` según navegador/SO: los controles pueden no existir en el dispositivo de pruebas | A | B | Detección en runtime (`track.getCapabilities()`); controles ocultos si no hay soporte; la captura base no depende de ellos | ADR-0024 |
+| R19 | El "pantalla completa" en iPhone es overlay CSS (sin Fullscreen API para elementos): las barras de Safari pueden asomar y `100dvh`/safe-areas deben validarse en el dispositivo real | M | M | `viewport-fit=cover` + `env(safe-area-inset-*)`; validación manual en el iPhone por ngrok; modo standalone ("Agregar a inicio") oculta las barras | ADR-0024 |
 
 ## 2. Supuestos
 - PostGIS se usa como servicio (no se distribuye binario combinado) → GPLv2+ no fuerza liberar la app (ADR-0005).
@@ -37,6 +39,8 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 - La clave de emparejamiento del CSV es el TAG (o `serial_number`); nunca el nombre (ADR-0022).
 - Un dato importado nace `pending`: nunca se presenta como verificado en terreno (ADR-0022).
 - La reasignación de un medio a otro activo es una corrección humana auditada, no un flujo automático (ADR-0017).
+- La leyenda por foto es opcional y se escribe/dicta con el teclado del SO (coherente con ADR-0023); no es un paso obligatorio (ADR-0024).
+- Las categorías de foto se configuran por tipo de activo; sin configuración se usa la lista predeterminada (ADR-0024).
 
 ## 3. Preguntas abiertas (consolidadas)
 - Alcance exacto del piloto Pro (qué cliente/instalación) — se define al iniciar Fase 1.
@@ -45,6 +49,7 @@ Probabilidad/Impacto: Alta (A) / Media (M) / Baja (B).
 - Fecha exacta de vigencia de la Ley 21.719 (puede postergarse a 2027) — confirmar al implementar.
 - ¿Cómo presentar en el expediente las sesiones multi-activo (`Session.asset_id = null`)? — al definir el piloto Pro (ADR-0019).
 - ¿Qué formato de exportación usan los CMMS de los clientes objetivo (SAP PM/Maximo)? — ajustar la plantilla CSV al tener una planilla real (ADR-0022).
+- ¿Alguna categoría de foto debe ser obligatoria para cerrar la verificación (p. ej. "Placa de datos")? — se decide tras el piloto (ADR-0024).
 
 ## 4. Decisión / Supuesto / Pregunta abierta
 - **Decisión:** los riesgos R1–R17 se revisan al cierre de cada fase.

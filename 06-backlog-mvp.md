@@ -321,6 +321,33 @@
   - **Criterios:** antes de sincronizar se puede editar el texto de transcript/nota, descartar media/audio, deshacer una verificación (revirtiendo el catálogo en caché) y editar el activo nuevo encolado; la edición se bloquea mientras `flush` está en curso.
   - **Dependencias:** CT-9.
 
+### Épica CI: Captura por pantallas y cámara a pantalla completa (ADR-0024, ADR-0023, ADR-0018)
+
+- [ ] CI-1: Router por `hash` con una pantalla por paso, Atrás del sistema y respaldo al padre (ADR-0024, ADR-0018).
+  - **Criterios:** rutas `/inicio`, `/ajustes`, `/activos`, `/activos/nuevo`, `/activos/qr`, `/activo`, `/activo/verificar`, `/activo/camara`, `/activo/camara/confirmar`, `/activo/voz`, `/activo/comentario`, `/cola`; guardas de consentimiento/activo/foto pendiente; ruta desconocida → pantalla por defecto; `back()` sin historial va al padre.
+  - **Dependencias:** CT-9, EC-6.
+- [ ] CI-2: Menú del activo con acciones grandes y sesión persistente en `kv` (ADR-0024, ADR-0017).
+  - **Criterios:** botones Verificar ficha / Fotos (con contador) / Nota de voz / Comentario / Terminar sesión; `ui.session` y `ui.currentAssetId` se restauran al recargar; activo inexistente → cierre encolado.
+  - **Dependencias:** CI-1.
+- [ ] CI-3: Cámara a pantalla completa con cambiar cámara, linterna, zoom y miniatura/contador (ADR-0024, ADR-0023).
+  - **Criterios:** overlay CSS `100dvh` + safe-areas; torch/zoom solo si `track.getCapabilities()` los expone; cambiar cámara cicla por `enumerateDevices` y persiste; disparador con destello y vibración; el stream se detiene al salir.
+  - **Dependencias:** CT-4, CI-1.
+- [ ] CI-4: Confirmación por foto (Repetir / Usar foto) con regreso a la cámara (ADR-0024).
+  - **Criterios:** cada disparo abre la revisión; Repetir descarta sin encolar; Usar foto encola, actualiza miniatura/contador y vuelve a la cámara; Atrás del sistema equivale a Repetir.
+  - **Dependencias:** CI-3.
+- [ ] CI-5: Leyenda opcional y categoría por foto en `media-item.metadata` (ADR-0024, ADR-0009).
+  - **Criterios:** `caption` (≤500), `category`, `category_label`, `camera_label`, `width`/`height` persisten en `metadata` con límites en el esquema; documentos existentes sin estas claves siguen válidos.
+  - **Dependencias:** CI-4.
+- [ ] CI-6: Categorías de foto configurables por tipo de activo en el panel admin (ADR-0024, ADR-0020).
+  - **Criterios:** `asset-type.photo_categories` (máx. 30, clave con patrón, duplicadas → 422); edición en `/admin/` con "Usar predeterminadas"; `PUT` sin el campo conserva las existentes.
+  - **Dependencias:** GA-2, CI-5.
+- [ ] CI-7: Expediente muestra/filtra por categoría y permite corregir leyenda/categoría (ADR-0024, ADR-0021, ADR-0019).
+  - **Criterios:** `mediaCard` muestra `metadata.caption` y badge de categoría; chips de filtro en la galería del activo; diálogo "Editar medio" corrige leyenda, categoría y activo destino con revisión.
+  - **Dependencias:** EC-5, CI-5.
+- [ ] CI-8: GPS por `watchPosition` durante la cámara y captura en mayor resolución (ADR-0024, ADR-0002).
+  - **Criterios:** el disparo no espera un fix nuevo (usa el último o la ubicación del activo); `openCamera` pide 1920×1080 ideal; `ImageCapture.takePhoto()` se usa cuando existe y cae al canvas si falla.
+  - **Dependencias:** CI-3.
+
 ---
 
 ## Trazabilidad

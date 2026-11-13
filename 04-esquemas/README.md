@@ -20,9 +20,9 @@ de un `id` único (UUID generado en el dispositivo cuando aplica, D4).
 | `session.schema.json` | Sesión de captura | — |
 | `device.schema.json` | Dispositivo + `device_capabilities` | — |
 | `asset.schema.json` | Activo (identidad canónica + registro y ciclo de vida) | D20 (ADR-0020), verificación D22 |
-| `asset-type.schema.json` | Tipo de activo con atributos configurables | D20 (estructura ISO 14224) |
+| `asset-type.schema.json` | Tipo de activo con atributos configurables | D20 (estructura ISO 14224), D24 (`photo_categories`) |
 | `asset-identifier.schema.json` | Identificador externo (QR/TAG/OCR) | D3 |
-| `media-item.schema.json` | Medio capturado | STAC Item (id, geometry, datetime, assets) |
+| `media-item.schema.json` | Medio capturado | STAC Item (id, geometry, datetime, assets), D24 (`metadata` de foto) |
 | `thermal-capture.schema.json` | Térmica T0–T3 | D1 (matriz °C + imagen + JSON) |
 | `observation.schema.json` | Observación | OGC SensorThings (phenomenonTime, result) |
 | `transcript.schema.json` | Audio→texto | D7 (motor `engine`) |
